@@ -6,12 +6,13 @@
 // @author       ValzarMen
 // @include      https://www.chaturbate.com/*
 // @include      https://chaturbate.com/*
-// @resource     vjsCSS https://vjs.zencdn.net/7.6.5/video-js.css
-// @resource     vjsCSS https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
-// @require      https://vjs.zencdn.net/7.6.5/video.js
-// @require      https://github.com/videojs/http-streaming/releases/download/v1.11.1/videojs-http-streaming.min.js
-// @require      https://code.jquery.com/jquery-3.4.1.min.js
-// @require      https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+// @require      https://raw.githubusercontent.com/valzar-cbp/cbplus/master/require/video-js-7.6.5.min.js
+// @require      https://raw.githubusercontent.com/valzar-cbp/cbplus/master/require/videojs-http-streaming-1.11.1.min.js
+// @require      https://raw.githubusercontent.com/valzar-cbp/cbplus/master/require/jquery-3.4.1.min.js
+// @require      https://raw.githubusercontent.com/valzar-cbp/cbplus/master/require/jquery-ui-1.12.1.min.js
+// @resource     vjCSS https://raw.githubusercontent.com/valzar-cbp/cbplus/master/resource/video-js.css
+// @resource     jqCSS https://raw.githubusercontent.com/valzar-cbp/cbplus/master/resource/jquery-ui.css
+// @resource     cbCSS https://raw.githubusercontent.com/valzar-cbp/cbplus/master/resource/cbplus.css
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -20,14 +21,15 @@
 
 'use strict';
 
+GM_addStyle (GM_getResourceText("vjCSS"));
+GM_addStyle (GM_getResourceText("jqCSS"));
+GM_addStyle (GM_getResourceText("cbCSS"));
+
 let chat = ''
 const http = new XMLHttpRequest()
 
 let terms = document.querySelector('#close_entrance_terms')
 if (terms) terms.click() // just accept terms
-
-
-//chat.onmessage = readMessage
 
 const camsPath = '/cams-cbplus/'
 const blackPath = '/cams-blacklist/'
@@ -44,8 +46,6 @@ else if (path == toursPath) toursPage()
 function camsSite() {
   const playerID = makeid(32)
   chat = new BroadcastChannel(playerID)
-  var cssTxt = GM_getResourceText("vjsCSS");
-  GM_addStyle (cssTxt);
 
   document.title = 'CBPlus Cams'
   let head = document.getElementById("header")
@@ -92,7 +92,6 @@ function camsSite() {
   rightMenu.appendChild(frame)
   body_main.appendChild(main)
   body_main.appendChild(rightMenu)
-  addCSS(document.head)
   document.body.appendChild(body_main)
 
   $('div#mainDiv').sortable({
@@ -406,31 +405,4 @@ function xButton(name) {
     removeCam(e.path[1])
   })
   return x
-}
-
-function addCSS(obj) {
-  const css = document.createElement("style")
-  css.type = "text/css"
-  css.innerHTML = `.oneCam { grid-template-columns: 1fr; grid-template-rows: 1fr; }
-.twoCamsH { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
-.Cams2 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-.Cams3 { grid-template-columns: 1fr 1fr; grid-template-rows: 2fr 1fr; grid-template-areas: "a a" ". ."; } .Cams3 > .cam:first-child { grid-area: a; }
-.Cams4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-.Cams5 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 2fr 1fr; grid-template-areas: "a a ." ". . ."; } .Cams5 > .cam:first-child { grid-area: a; }
-.Cams6 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; grid-template-areas: "a a ." "a a ." ". . ."; } .Cams6 > .cam:first-child { grid-area: a; }
-.Cams9 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
-.Cams12 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
-.Cams16 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; }
-.Cams20 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr; }
-.Cams25 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr; }
-.Cams30 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr; }
-.Cams35 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr; }
-.cam { display: flex; align-items: center; justify-content: center; position: relative; }
-.plusButton { border-radius: 50%; background-color: #e7e7e7; color: black; border: none; padding: 24px 48px; cursor: pointer;
-text-align: center; text-decoration: none; display: inline-block; font-size: 24px; outline: none; }
-.xButton { background-color: #555555; border: none; padding: 1px 3px; cursor: pointer;
-text-align: center; text-decoration: none; display: inline-block; font-size: 10px; outline: none; }
-div.video-js { background-color: inherit; background-image: inherit; }
-.video-js div.vjs-control-bar { background-color: ; }`
-  obj.appendChild(css)
 }
