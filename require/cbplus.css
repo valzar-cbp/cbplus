@@ -1,0 +1,119 @@
+.oneCam {
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+}
+
+.twoCamsH {
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+}
+
+.Cams2 {
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+
+.Cams3 {
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 2fr 1fr;
+	grid-template-areas: "a a" ". .";
+}
+.Cams3 > .cam:first-child {
+	grid-area: a;
+}
+
+.Cams4 {
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+
+.Cams5 {
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 2fr 1fr;
+	grid-template-areas: "a a ." ". . .";
+}
+.Cams5 > .cam:first-child {
+	grid-area: a;
+}
+
+.Cams6 {
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-template-areas: "a a ." "a a ." ". . .";
+}
+.Cams6 > .cam:first-child {
+	grid-area: a;
+}
+
+.Cams9 {
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+}
+
+.Cams12 {
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+}
+
+.Cams16 {
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.Cams20 {
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.Cams25 {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.Cams30 {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.Cams35 {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.cam {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.plusButton {
+	border-radius: 50%;
+	background-color: #e7e7e7;
+	color: black;
+	border: none;
+	padding: 24px 48px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 24px;
+	outline: none;
+}
+
+.xButton {
+	background-color: #555555;
+	border: none;
+	padding: 1px 3px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 10px;
+	outline: none;
+}
+
+div.video-js {
+	background-color: inherit;
+	background-image: inherit;
+}
