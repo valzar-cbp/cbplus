@@ -22,7 +22,7 @@
 
 'use strict';
 
-const globals;
+const globals = {};
 
 GM_addStyle (GM_getResourceText("vjCSS"));
 GM_addStyle (GM_getResourceText("jqCSS"));

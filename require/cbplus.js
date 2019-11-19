@@ -75,7 +75,7 @@ function camsSite() {
     stop: function (event, ui) { Dropped(event, ui) }
   })
 
-  chat.onmessage = readMessage
+  globals.chat.onmessage = readMessage
 }
 
 function Dropped(event, ui) {
@@ -124,7 +124,7 @@ function toursPage() {
   addMiniButtons()
   setTimeout(function(){ window.location.reload(1); }, 60000);
   let playerID = document.location.search; playerID = playerID.substring(playerID.indexOf("playerID")).split("&")[0].split("=")[1]
-  chat = new BroadcastChannel(playerID)
+  globals.chat = new BroadcastChannel(playerID)
 }
 
 function readMessage(msg) {
@@ -251,12 +251,12 @@ function addMiniButtons() {
     rooms[i].querySelector('a').removeAttribute("href")
     rooms[i].style.cursor = 'pointer'
     rooms[i].querySelector('a').setAttribute("id", tmpName)
-    rooms[i].querySelector('a').onclick = function () { chat.postMessage(`watch ${this.id}`) }
+    rooms[i].querySelector('a').onclick = function () { globals.chat.postMessage(`watch ${this.id}`) }
     tmpLink.removeAttribute('href')
     tmpLink.setAttribute('target', '_self')
     tmpLink.style.cursor = 'pointer'
     tmpLink.setAttribute("id", tmpName)
-    tmpLink.onclick = function () { chat.postMessage(`watch ${this.id}`) }
+    tmpLink.onclick = function () { globals.chat.postMessage(`watch ${this.id}`) }
     let buttons = document.createElement('div')
     buttons.style.top = '2px'
     buttons.style.left = '2px'
