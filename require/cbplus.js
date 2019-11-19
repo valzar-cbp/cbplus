@@ -1,5 +1,4 @@
 function generalStuff() {
-  globals.chat = ''
   globals.http = new XMLHttpRequest()
 
   let terms = document.querySelector('#close_entrance_terms')
