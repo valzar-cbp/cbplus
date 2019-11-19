@@ -1,6 +1,7 @@
 // ==UserScript==
-// @name         CBPlus
-// @namespace    http://tampermonkey.net/
+// @name         cbplus
+// @namespace    https://github.com/valzar-cbp/
+// @downloadURL  https://raw.githubusercontent.com/valzar-cbp/cbplus/master/index.js
 // @version      1.0
 // @description  Better Chaturbate!
 // @author       ValzarMen
@@ -15,6 +16,7 @@
 // @resource     cbCSS https://raw.githubusercontent.com/valzar-cbp/cbplus/master/resource/cbplus.css
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
+// @run-at       document-end
 // ==/UserScript==
 
 // DUPLICATED IDS fix
@@ -36,7 +38,7 @@ function generalStuff() {
   if (terms) terms.click() // just accept terms
 
   addTabs()
-  cleanPage() 
+  cleanPage()
 
   globals.camsPath = '/cams-cbplus/'
   globals.blackPath = '/cams-blacklist/'
@@ -163,10 +165,10 @@ function readMessage(msg) {
   let wins = document.querySelectorAll("div#mainDiv > div.free")
   if (wins.length == 0 && !check.length) wins = addCamPlace()
   if (cmd[0] == "watch" && cmd[1].length > 0 && wins.length > 0 && !check.length) {
-    http.open('GET', `https://chaturbate.com/embed/${cmd[1]}`, true)
-    http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
-    http.onload = function() { addCam(http.responseText, wins[0], cmd[1]) }
-    http.send()
+    globals.http.open('GET', `https://chaturbate.com/embed/${cmd[1]}`, true)
+    globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+    globals.http.onload = function() { addCam(globals.http.responseText, wins[0], cmd[1]) }
+    globals.http.send()
   } else if (check.length) { console.log("already watching "+cmd[1]+"!") }
   else {
     console.log("no free spots left!")
@@ -387,10 +389,10 @@ function plusButton() {
         if (user_data.includes('/') || user_data.includes('chaturbate.com')) {
           user_data = user_data.split('/').filter(Boolean).pop()
         }
-        http.open('GET', `https://chaturbate.com/embed/${user_data}`, true)
-        http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
-        http.onload = function() { addCam(http.responseText, e.path[1], user_data) }
-        http.send()
+        globals.http.open('GET', `https://chaturbate.com/embed/${user_data}`, true)
+        globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+        globals.http.onload = function() { addCam(globals.http.responseText, e.path[1], user_data) }
+        globals.http.send()
       }
     })
   return b
