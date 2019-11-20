@@ -2,7 +2,7 @@
 // @name         cbplus
 // @namespace    https://github.com/valzar-cbp/
 // @downloadURL  https://raw.githubusercontent.com/valzar-cbp/cbplus/master/index.js
-// @version      1.0.1
+// @version      1.0.2
 // @description  Better Chaturbate!
 // @author       ValzarMen
 // @include      https://www.chaturbate.com/*
@@ -18,8 +18,6 @@
 // @grant        GM_addStyle
 // @run-at       document-end
 // ==/UserScript==
-
-// DUPLICATED IDS fix
 
 'use strict';
 
@@ -131,7 +129,7 @@ function blackSite() {
     li.onclick = function() {
       if (confirm('Are you sure you want to delete ' + this.innerHTML.split(",")[0] + ' from blacklist?')) {
         localStorage.removeItem('cbplus_blacklist_' + this.innerHTML.split(",")[0]);
-        console.log(this.innerHTML + " is not longer on BLACKLIST");
+        //console.log(this.innerHTML + " is not longer on BLACKLIST");
         this.remove();
       } else {
         // Do nothing!
@@ -161,7 +159,7 @@ function toursPage() {
 
 function readMessage(msg) {
   let cmd = msg.data.split(" ")
-  let check = document.body.querySelectorAll("div#mainDiv > div#"+cmd[1])
+  let check = document.body.querySelectorAll("div#mainDiv > div[name=\""+cmd[1]+"\"]")
   let wins = document.querySelectorAll("div#mainDiv > div.free")
   if (wins.length == 0 && !check.length) wins = addCamPlace()
   if (cmd[0] == "watch" && cmd[1].length > 0 && wins.length > 0 && !check.length) {
@@ -171,7 +169,7 @@ function readMessage(msg) {
     globals.http.send()
   } else if (check.length) { console.log("already watching "+cmd[1]+"!") }
   else {
-    console.log("no free spots left!")
+    //console.log("no free spots left!")
   }
 }
 
@@ -282,13 +280,13 @@ function addMiniButtons() {
     let tmpName = rooms[i].querySelector('div.title a').getAttribute("href").slice(1,-1)
     rooms[i].querySelector('a').removeAttribute("href")
     rooms[i].style.cursor = 'pointer'
-    rooms[i].querySelector('a').setAttribute("id", tmpName)
-    rooms[i].querySelector('a').onclick = function () { globals.chat.postMessage(`watch ${this.id}`) }
+    rooms[i].querySelector('a').setAttribute("name", tmpName)
+    rooms[i].querySelector('a').onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
     tmpLink.removeAttribute('href')
     tmpLink.setAttribute('target', '_self')
     tmpLink.style.cursor = 'pointer'
-    tmpLink.setAttribute("id", tmpName)
-    tmpLink.onclick = function () { globals.chat.postMessage(`watch ${this.id}`) }
+    tmpLink.setAttribute("name", tmpName)
+    tmpLink.onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
     let buttons = document.createElement('div')
     buttons.style.top = '2px'
     buttons.style.left = '2px'
@@ -297,17 +295,17 @@ function addMiniButtons() {
 
     let xButton = document.createElement('div')
     xButton.innerHTML = '⛔'
-    xButton.setAttribute("id", tmpName)
+    xButton.setAttribute("name", tmpName)
     xButton.onclick = function () {
       let cam = this.parentNode.parentNode
-      let name = this.id
+      let name = this.getAttribute("name")
       if (confirm('Are you sure you want to add ' + name + ' to blacklist?')) {
         let gender = cam.querySelector('div.title span').className.substr(-1)
         let age = cam.querySelector('div.title span').innerHTML;
         let value = gender + " " + age + " added: " + new Date().toLocaleString();
         cam.style.display = "none";
         localStorage.setItem(`cbplus_blacklist_${name}`, value);
-        console.log(name + " is now on BLACKLIST");
+        //console.log(name + " is now on BLACKLIST");
       }
     }
     buttons.appendChild(xButton)
@@ -333,7 +331,6 @@ function addTabs() {
 }
 
 function getRandomColor() {
-  //var letters = '0123456789ABCDEF';
   var letters = '0123456789ABC';
   var color = '#';
   for (var i = 0; i < 6; i++) {
@@ -361,7 +358,7 @@ function addCam(resp, div, model) {
   let poster = 'https://cbjpeg.stream.highwebmedia.com/stream?room='+model+'&f='+Math.random()
   let id = 'cam'+Math.floor(Math.random()*10000)
   div.classList.remove('free')
-  div.setAttribute("id", model)
+  div.setAttribute("name", model)
   div.innerHTML = `<video style="width: 100%; height: 100%;" id="${id}" class="video-js" poster="${poster}">
                    <source src="${stream}" type=""application/x-mpegURL""></source></video>`
   div.appendChild(xButton(model))
@@ -372,7 +369,7 @@ function addCam(resp, div, model) {
 function removeCam(div) {
   div.innerHTML = ''
   div.classList.add('free')
-  div.removeAttribute("id")
+  div.removeAttribute("name")
   div.appendChild(plusButton())
   cleanCams()
 }
