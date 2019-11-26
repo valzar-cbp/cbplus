@@ -2,7 +2,7 @@
 // @name         cbplus
 // @namespace    https://github.com/valzar-cbp/
 // @downloadURL  https://raw.githubusercontent.com/valzar-cbp/cbplus/master/index.js
-// @version      1.0.2
+// @version      1.0.3
 // @description  Better Chaturbate!
 // @author       ValzarMen
 // @include      https://www.chaturbate.com/*
@@ -318,6 +318,7 @@ function addMiniButtons() {
 
 function addTabs() {
   var sub_nav = document.getElementById("nav");
+  document.querySelector("div.nav-bar").style.height = "auto"
   if (sub_nav) {
     // cams Tab
     var camsTab = document.createElement("li");
