@@ -260,7 +260,6 @@ function cleanCams() {
 
 function camDiv() {
   let c = document.createElement('div')
-  c.style.backgroundImage = 'linear-gradient('+getRandomColor()+',black)'
   c.classList = 'cam ui-sortable-handle free'
   c.appendChild(plusButton())
   return c
@@ -331,15 +330,6 @@ function addTabs() {
   }
 }
 
-function getRandomColor() {
-  var letters = '0123456789ABC';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * letters.length)];
-  }
-  return color;
-}
-
 function makeid(length) {
    var result = '';
    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -377,7 +367,7 @@ function removeCam(div) {
 
 function plusButton() {
   let b = document.createElement('button')
-  b.innerHTML = '+'
+  b.innerHTML = 'ADD'
   b.classList.add('plusButton')
   b.addEventListener('click', e => {
       e.preventDefault()
