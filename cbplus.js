@@ -317,7 +317,7 @@ function addCam(resp, div, model) {
   let pos1 = resp.search('https://edge')
   let pos2 = resp.search('.m3u8')+5
   let stream = ''
-  if (resp.includes('.m3u8')) { stream = resp.substring(pos1, pos2) }
+  if (resp.includes('.m3u8')) { stream = resp.substring(pos1, pos2).replace(/\u002D/g, '-') }
   else { stream = 'no data' }
   let poster = 'https://cbjpeg.stream.highwebmedia.com/stream?room='+model+'&f='+Math.random()
   let id = 'cam'+Math.floor(Math.random()*10000)
@@ -350,7 +350,7 @@ function plusButton() {
         if (user_data.includes('/') || user_data.includes('chaturbate.com')) {
           user_data = user_data.split('/').filter(Boolean).pop()
         }
-        globals.http.open('GET', `https://chaturbate.com/embed/${user_data}`, true)
+        globals.http.open('GET', `https://chaturbate.com/embed/${user_data}/?embed_video_only=1`, true)
         globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
         globals.http.onload = function() { addCam(globals.http.responseText, e.path[1], user_data) }
         globals.http.send()
