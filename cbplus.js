@@ -319,6 +319,7 @@ function addCam(resp, div, model) {
   let stream = ''
   if (resp.includes('.m3u8')) { stream = resp.substring(pos1, pos2).replace(/\u002D/g, '-') }
   else { stream = 'no data' }
+  console.log(stream)
   let poster = 'https://cbjpeg.stream.highwebmedia.com/stream?room='+model+'&f='+Math.random()
   let id = 'cam'+Math.floor(Math.random()*10000)
   div.classList.remove('free')
