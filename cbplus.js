@@ -265,10 +265,10 @@ function addMiniButtons() {
     buttons.style.position = 'absolute'
     buttons.style.cursor = 'pointer'
 
-    let xButton = document.createElement('div')
-    xButton.innerHTML = '⛔'
-    xButton.setAttribute("name", tmpName)
-    xButton.onclick = function () {
+    let blockButton = document.createElement('div')
+    blockButton.innerHTML = '⛔'
+    blockButton.setAttribute("name", tmpName)
+    blockButton.onclick = function () {
       let cam = this.parentNode.parentNode
       let name = this.getAttribute("name")
       if (confirm('Are you sure you want to add ' + name + ' to blacklist?')) {
@@ -280,7 +280,7 @@ function addMiniButtons() {
         //console.log(name + " is now on BLACKLIST");
       }
     }
-    buttons.appendChild(xButton)
+    buttons.appendChild(blockButton)
 
     let gender = rooms[i].querySelector('div.title span').className.substr(-1)
     if (gender == 'm' || gender == 's') rooms[i].style.display = "none";
@@ -325,7 +325,7 @@ function addCam(resp, div, model) {
   div.setAttribute("name", model)
   div.innerHTML = `<video style="width: 100%; height: 100%;" id="${id}" class="video-js" poster="${poster}">
                    <source src="${stream}" type=""application/x-mpegURL""></source></video>`
-  div.appendChild(xButton(model))
+  div.appendChild(topButtons(model))
   const player = videojs(id, { controls: true, autoplay: true, preload: 'auto', fluid: false, enableLowInitialPlaylist: true })
   player.volume(0.01)
 }
@@ -359,14 +359,16 @@ function plusButton() {
   return b
 }
 
-function xButton(name) {
+function topButtons(name) {
+  let top = document.createElement('div')
+  r.classList.add('topFrame')
+  let r = document.createElement('button')
+  r.innerHTML = name+' 🔄'
+  r.classList.add('topButton')
   let x = document.createElement('button')
-  x.innerHTML = name+' ❌'
-  x.classList.add('xButton')
-  x.style.position = 'absolute'
-  x.style.top = 0
-  x.style.right = 0
-  x.style.zIndex = '999'
+  x.innerHTML = '❌'
+  x.classList.add('topButton')
+  
 
   x.addEventListener('click', e => {
     e.preventDefault()

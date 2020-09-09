@@ -104,8 +104,16 @@
 	outline: none;
 }
 
-.xButton {
-	background-color: #555555;
+.topFrame {
+	background-color: rgba(43, 51, 63, 0.7);
+	position: 'absolute';
+  top: 0;
+  right: 0;
+  z-index: '999';
+}
+
+.topButton {
+	background-color: rgba(43, 51, 63, 0.7);
 	border: none;
 	padding: 1px 3px;
 	cursor: pointer;
