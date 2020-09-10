@@ -105,11 +105,10 @@
 }
 
 .topFrame {
-  background-color: rgba(43, 51, 63, 0.7);
-  position: 'absolute';
+  position: absolute;
   top: 0;
   right: 0;
-  z-index: '999';
+  z-index: 999;
 }
 
 .topButton {

@@ -372,6 +372,7 @@ function topButtons(name) {
   top.appendChild(x)
   x.addEventListener('click', e => {
     e.preventDefault()
+    console.dir(e)
     removeCam(e.path[1])
   })
   return top
