@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         cbplus-dev
+// @name         cbplus
 // @namespace    https://github.com/valzar-cbp/
 // @downloadURL  https://raw.githubusercontent.com/valzar-cbp/cbplus/master/index.js
-// @version      1.1.0
+// @version      1.1.1
 // @description  Better Chaturbate!
 // @author       ValzarMen
 // @include      https://www.chaturbate.com/*
