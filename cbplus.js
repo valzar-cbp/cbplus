@@ -361,18 +361,18 @@ function plusButton() {
 
 function topButtons(name) {
   let top = document.createElement('div')
-  r.classList.add('topFrame')
+  top.classList.add('topFrame')
   let r = document.createElement('button')
   r.innerHTML = name+' 🔄'
   r.classList.add('topButton')
   let x = document.createElement('button')
   x.innerHTML = '❌'
   x.classList.add('topButton')
-  
-
+  top.appendChild(r)
+  top.appendChild(x)
   x.addEventListener('click', e => {
     e.preventDefault()
     removeCam(e.path[1])
   })
-  return x
+  return top
 }
