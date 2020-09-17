@@ -136,7 +136,8 @@ function readMessage(msg) {
   let wins = document.querySelectorAll("div#mainDiv > div.free")
   if (wins.length == 0 && !check.length) wins = addCamPlace()
   if (cmd[0] == "watch" && cmd[1].length > 0 && wins.length > 0 && !check.length) {
-    globals.http.open('GET', `https://chaturbate.com/embed/${cmd[1]}`, true)
+//    globals.http.open('GET', `https://chaturbate.com/embed/${cmd[1]}`, true)
+    globals.http.open('GET', `https://chaturbate.com/${cmd[1]}`, true)
     globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
     globals.http.onload = function() { addCam(globals.http.responseText, wins[0], cmd[1]) }
     globals.http.send()
@@ -350,7 +351,8 @@ function plusButton() {
         if (user_data.includes('/') || user_data.includes('chaturbate.com')) {
           user_data = user_data.split('/').filter(Boolean).pop()
         }
-        globals.http.open('GET', `https://chaturbate.com/embed/${user_data}/?embed_video_only=1`, true)
+//        globals.http.open('GET', `https://chaturbate.com/embed/${user_data}/?embed_video_only=1`, true)
+        globals.http.open('GET', `https://chaturbate.com/${user_data}`, true)
         globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
         globals.http.onload = function() { addCam(globals.http.responseText, e.path[1], user_data) }
         globals.http.send()
