@@ -255,11 +255,11 @@ function addMiniButtons() {
     rooms[i].style.cursor = 'pointer'
     rooms[i].querySelector('a').setAttribute("name", tmpName)
     rooms[i].querySelector('a').onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
-    tmpLink.removeAttribute('href')
-    tmpLink.setAttribute('target', '_self')
+//    tmpLink.removeAttribute('href')
+    tmpLink.setAttribute('target', '_blank')
     tmpLink.style.cursor = 'pointer'
-    tmpLink.setAttribute("name", tmpName)
-    tmpLink.onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
+//    tmpLink.setAttribute("name", tmpName)
+//    tmpLink.onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
     let buttons = document.createElement('div')
     buttons.style.top = '2px'
     buttons.style.left = '2px'
