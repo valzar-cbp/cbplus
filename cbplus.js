@@ -329,6 +329,8 @@ function addCam(resp, div, model) {
   div.appendChild(topButtons(model))
   const player = videojs(id, { controls: true, autoplay: true, preload: 'auto', fluid: false, enableLowInitialPlaylist: true })
   player.volume(0.01)
+  player.duration(600);
+  player.removeClass('vjs-live');
 }
 
 function removeCam(div) {
