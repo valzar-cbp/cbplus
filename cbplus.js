@@ -335,7 +335,6 @@ function refreshCam(div) {
   globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
   globals.http.onload = function() { addCam(globals.http.responseText, div, model_name) }
   globals.http.send()
-  cleanCams()
 }
 
 function removeCam(div) {
