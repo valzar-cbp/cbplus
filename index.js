@@ -2,7 +2,7 @@
 // @name         cbplus-dev
 // @namespace    https://github.com/valzar-cbp/
 // @downloadURL  https://raw.githubusercontent.com/valzar-cbp/cbplus/dev/index.js
-// @version      1.1.6
+// @version      1.1.7
 // @description  Better Chaturbate!
 // @author       ValzarMen
 // @include      https://www.chaturbate.com/*
@@ -23,8 +23,6 @@
 GM_addStyle (GM_getResourceText("vjCSS"));
 GM_addStyle (GM_getResourceText("jqCSS"));
 GM_addStyle (GM_getResourceText("cbCSS"));
-
-generalStuff()
 
 const globals = {};
 
@@ -355,7 +353,8 @@ function addCam(resp, div, model) {
 function refreshCam(div) {
   div.innerHTML = ''
   div.classList.add('free')
-  let model_name = div.name
+  console.dir(div)
+  let model_name = div.getAttribute("name")
   div.removeAttribute("name")
   globals.http.open('GET', `https://chaturbate.com/${model_name}`, true)
   globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
@@ -413,3 +412,5 @@ function topButtons(name) {
   })
   return top
 }
+
+generalStuff()
