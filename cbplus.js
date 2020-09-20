@@ -136,7 +136,6 @@ function readMessage(msg) {
   let wins = document.querySelectorAll("div#mainDiv > div.free")
   if (wins.length == 0 && !check.length) wins = addCamPlace()
   if (cmd[0] == "watch" && cmd[1].length > 0 && wins.length > 0 && !check.length) {
-//    globals.http.open('GET', `https://chaturbate.com/embed/${cmd[1]}`, true)
     globals.http.open('GET', `https://chaturbate.com/${cmd[1]}`, true)
     globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
     globals.http.onload = function() { addCam(globals.http.responseText, wins[0], cmd[1]) }
@@ -255,11 +254,8 @@ function addMiniButtons() {
     rooms[i].style.cursor = 'pointer'
     rooms[i].querySelector('a').setAttribute("name", tmpName)
     rooms[i].querySelector('a').onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
-//    tmpLink.removeAttribute('href')
     tmpLink.setAttribute('target', '_blank')
     tmpLink.style.cursor = 'pointer'
-//    tmpLink.setAttribute("name", tmpName)
-//    tmpLink.onclick = function () { globals.chat.postMessage(`watch ${this.getAttribute("name")}`) }
     let buttons = document.createElement('div')
     buttons.style.top = '2px'
     buttons.style.left = '2px'
@@ -278,7 +274,6 @@ function addMiniButtons() {
         let value = gender + " " + age + " added: " + new Date().toLocaleString();
         cam.style.display = "none";
         localStorage.setItem(`cbplus_blacklist_${name}`, value);
-        //console.log(name + " is now on BLACKLIST");
       }
     }
     buttons.appendChild(blockButton)
@@ -329,8 +324,18 @@ function addCam(resp, div, model) {
   div.appendChild(topButtons(model))
   const player = videojs(id, { controls: true, autoplay: true, preload: 'auto', fluid: false, enableLowInitialPlaylist: true })
   player.volume(0.01)
-  player.duration(600);
-  player.removeClass('vjs-live');
+}
+
+function refreshCam(div) {
+  div.innerHTML = ''
+  div.classList.add('free')
+  let model_name = div.name
+  div.removeAttribute("name")
+  globals.http.open('GET', `https://chaturbate.com/${model_name}`, true)
+  globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+  globals.http.onload = function() { addCam(globals.http.responseText, div, model_name) }
+  globals.http.send()
+  cleanCams()
 }
 
 function removeCam(div) {
@@ -353,7 +358,6 @@ function plusButton() {
         if (user_data.includes('/') || user_data.includes('chaturbate.com')) {
           user_data = user_data.split('/').filter(Boolean).pop()
         }
-//        globals.http.open('GET', `https://chaturbate.com/embed/${user_data}/?embed_video_only=1`, true)
         globals.http.open('GET', `https://chaturbate.com/${user_data}`, true)
         globals.http.setRequestHeader("Content-type","application/x-www-form-urlencoded")
         globals.http.onload = function() { addCam(globals.http.responseText, e.path[1], user_data) }
@@ -373,6 +377,10 @@ function topButtons(name) {
   x.innerHTML = '❌'
   x.classList.add('topButton')
   top.appendChild(r)
+  r.addEventListener('click', e => {
+    e.preventDefault()
+    refreshCam(e.path[2])
+  })
   top.appendChild(x)
   x.addEventListener('click', e => {
     e.preventDefault()
