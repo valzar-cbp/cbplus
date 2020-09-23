@@ -456,7 +456,6 @@ function getGoal(g, name) {
 }
 
 function getTopic(t, model_name) {
-  console.log('hello')
   var resp = new XMLHttpRequest()
   resp.open('GET', `https://chaturbate.com/${model_name}`, true)
   resp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
@@ -468,7 +467,6 @@ function getTopic(t, model_name) {
     t.innerHTML = topic + ' 🖹'
   }
   resp.send()
-  console.log('two')
 }
 
 generalStuff()
