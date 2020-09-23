@@ -394,6 +394,14 @@ function plusButton() {
 function topButtons(name) {
   let top = document.createElement('div')
   top.classList.add('topFrame')
+  let g = document.createElement('button')
+  g.classList.add("topButton");
+  g.innerHTML = getGoal(g, name)
+  top.appendChild(g)
+  g.addEventListener('click', e => {
+  e.preventDefault()
+    getGoal(g, name)
+  })
   let r = document.createElement('button')
   r.innerHTML = name+' 🔄'
   r.classList.add('topButton')
@@ -411,6 +419,28 @@ function topButtons(name) {
     removeCam(e.path[2])
   })
   return top
+}
+
+function getGoal(g, name) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch(`https://chaturbate.com/api/panel_context/${name}/`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      var goal = result.layers[1].text
+      g.innerHTML = goal + ' 🔄'
+    })
+    .catch(error => {
+      console.log('error', error)
+      g.innerHTML = 'not online 🔄'
+    })
 }
 
 generalStuff()
