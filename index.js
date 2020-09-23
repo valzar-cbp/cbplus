@@ -394,6 +394,18 @@ function plusButton() {
 function topButtons(name) {
   let top = document.createElement('div')
   top.classList.add('topFrame')
+  let t = document.createElement('button')
+  t.classList.add("topButton");
+  t.innerHTML = 'show topic 🖹'
+  top.appendChild(t)
+  t.addEventListener('mouseover', e => {
+    e.preventDefault()
+    getTopic(t, name)
+  })
+  t.addEventListener('mouseout', e => {
+    e.preventDefault()
+    t.innerHTML = 'show topic 🖹'
+  })
   let g = document.createElement('button')
   g.classList.add("topButton");
   g.innerHTML = getGoal(g, name)
@@ -441,6 +453,22 @@ function getGoal(g, name) {
       console.log('error', error)
       g.innerHTML = 'not online 🔄'
     })
+}
+
+function getTopic(t, model_name) {
+  console.log('hello')
+  var resp = new XMLHttpRequest()
+  resp.open('GET', `https://chaturbate.com/${model_name}`, true)
+  resp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+  resp.onload = function () {
+    let response = resp.responseText
+    let top1 = response.search('<meta property="og:description" content=')
+    let top2 = response.search('<meta property="og:image"')
+    let topic = response.substring(top1, top2).replace(/\\u002D/g, '-').replace('<meta property="og:description" content="', '').replace('" />', '')
+    t.innerHTML = topic + ' 🖹'
+  }
+  resp.send()
+  console.log('two')
 }
 
 generalStuff()
