@@ -394,9 +394,36 @@ function plusButton() {
 function topButtons(name) {
   let top = document.createElement('div')
   top.classList.add('topFrame')
+  let t = document.createElement('button')
+  t.classList.add("topButton")
+  t.style.color = 'white'
+  t.innerHTML = 'topic 🖹'
+  top.appendChild(t)
+  t.addEventListener('click', e => {
+    e.preventDefault()
+    if (t.innerHTML === 'topic 🖹'){
+      getTopic(t, name)
+    } else {
+      t.innerHTML = 'topic 🖹'
+    }
+  })
+  let g = document.createElement('button')
+  g.classList.add("topButton")
+  g.style.color = 'white'
+  g.innerHTML = 'goal 🔄'
+  top.appendChild(g)
+  g.addEventListener('click', e => {
+    if (g.innerHTML === 'goal 🔄'){
+      getGoal(g, name)
+    } else {
+      g.innerHTML = 'goal 🔄'
+    }
+  e.preventDefault()
+  })
   let r = document.createElement('button')
   r.innerHTML = name+' 🔄'
   r.classList.add('topButton')
+  r.style.color = 'white'
   let x = document.createElement('button')
   x.innerHTML = '❌'
   x.classList.add('topButton')
@@ -411,6 +438,72 @@ function topButtons(name) {
     removeCam(e.path[2])
   })
   return top
+}
+
+function getGoal(g, name) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+  var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+  };
+
+  fetch(`https://chaturbate.com/api/panel_context/${name}/`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+          var goal = result.layers[1].text
+          g.innerHTML = goal + ' 🔄'
+      })
+      .catch(error => {
+          console.log('error', error)
+          g.innerHTML = 'not online 🔄'
+      })
+
+  fetch(`https://chaturbate.com/api/panel_context/${name}/`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+          try {
+              let goalstring = ''
+              result.layers.forEach(function (elem) {
+                  if (elem.text) {
+                      goalstring += elem.text + ' '
+                  }
+              })
+              g.innerHTML = goalstring + ' 🔄'
+
+          } catch (error) {
+              let panelarr = [result.row1_label, result.row1_value, result.row2_label, result.row2_value]
+              let goalstring = ''
+              panelarr.forEach(function (elem) {
+                  if (elem) {
+                      goalstring += elem + ' '
+                  }
+              })
+              g.innerHTML = goalstring + ' 🔄'
+          }
+      }).catch(error => {
+
+          console.log('error', error)
+          g.innerHTML = 'no goal 🔄'
+
+      })
+}
+
+
+function getTopic(t, model_name) {
+  var resp = new XMLHttpRequest()
+  resp.open('GET', `https://chaturbate.com/${model_name}`, true)
+  resp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+  resp.onload = function () {
+    let response = resp.responseText
+    let top1 = response.search('<meta property="og:description" content=')
+    let top2 = response.search('<meta property="og:image"')
+    let topic = response.substring(top1, top2).replace(/\\u002D/g, '-').replace('<meta property="og:description" content="', '').replace('" />', '')
+    t.innerHTML = topic + ' 🖹'
+  }
+  resp.send()
 }
 
 generalStuff()
