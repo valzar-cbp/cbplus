@@ -407,19 +407,15 @@ function topButtons(name) {
       t.innerHTML = 'topic 🖹'
     }
   })
-  let g = document.createElement('button')
-  g.classList.add("topButton")
-  g.style.color = 'white'
-  g.innerHTML = 'goal 🔄'
-  top.appendChild(g)
-  g.addEventListener('click', e => {
-    if (g.innerHTML === 'goal 🔄'){
-      getGoal(g, name)
-    } else {
-      g.innerHTML = 'goal 🔄'
-    }
-  e.preventDefault()
-  })
+  let g = document.createElement("button");
+  g.classList.add("topButton");
+  g.style.color = "white";
+  getGoal(g, name);
+  top.appendChild(g);
+  g.addEventListener("click", (e) => {
+    e.preventDefault();
+    getGoal(g, name);
+  });
   let r = document.createElement('button')
   r.innerHTML = name+' 🔄'
   r.classList.add('topButton')
@@ -442,55 +438,74 @@ function topButtons(name) {
 
 function getGoal(g, name) {
   var myHeaders = new Headers();
+  g.innerHTML = "no goal 🔄";
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
   var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
   };
-
   fetch(`https://chaturbate.com/api/panel_context/${name}/`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-          var goal = result.layers[1].text
-          g.innerHTML = goal + ' 🔄'
-      })
-      .catch(error => {
-          console.log('error', error)
-          g.innerHTML = 'not online 🔄'
-      })
-
-  fetch(`https://chaturbate.com/api/panel_context/${name}/`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-          try {
-              let goalstring = ''
-              result.layers.forEach(function (elem) {
-                  if (elem.text) {
-                      goalstring += elem.text + ' '
-                  }
-              })
-              g.innerHTML = goalstring + ' 🔄'
-
-          } catch (error) {
-              let panelarr = [result.row1_label, result.row1_value, result.row2_label, result.row2_value]
-              let goalstring = ''
-              panelarr.forEach(function (elem) {
-                  if (elem) {
-                      goalstring += elem + ' '
-                  }
-              })
-              g.innerHTML = goalstring + ' 🔄'
+    .then((response) => response.json())
+    .then((result) => {
+      try {
+        console.log(result);
+        let goalstring = "";
+        if (result.layers.length > 0) {
+          result.layers.forEach(function (elem) {
+            if (elem.text) {
+              goalstring += elem.text + " ";
+            }
+          });
+        } else {
+          console.log(result.table);
+          let panelarr = [
+            result.table.row_1.col_1.value,
+            result.table.row_2.col_1.value,
+            result.table.row_3.col_1.value,
+          ];
+          panelarr.forEach(function (elem) {
+            if (elem) {
+              goalstring += elem + " ";
+            }
+          });
+        }
+        if (goalstring !== "") {
+          console.log(`in if`);
+          g.innerHTML = goalstring + " 🔄";
+        }
+      } catch (error) {
+        console.log("catch 1");
+        try {
+          let panelarr = [
+            result.row1_label,
+            result.row1_value,
+            result.row2_label,
+            result.row2_value,
+          ];
+          let goalstring = "";
+          panelarr.forEach(function (elem) {
+            if (elem) {
+              goalstring += elem + " ";
+            }
+          });
+          if (goalstring !== "") {
+            console.log(`in if`);
+            g.innerHTML = goalstring + " 🔄";
           }
-      }).catch(error => {
-
-          console.log('error', error)
-          g.innerHTML = 'no goal 🔄'
-
-      })
+        } catch (error) {
+          console.log("catch 2");
+          g.innerHTML = "no goal 🔄";
+        }
+      }
+    })
+    .catch((error) => {
+      console.log("catch 3");
+      console.log("error", error);
+      g.innerHTML = "no goal 🔄";
+    });
 }
-
 
 function getTopic(t, model_name) {
   var resp = new XMLHttpRequest()
